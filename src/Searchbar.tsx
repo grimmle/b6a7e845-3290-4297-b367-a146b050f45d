@@ -1,4 +1,4 @@
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 
@@ -17,22 +17,20 @@ function Searchbar(props: Props) {
   return (
     <div className="Searchbar">
       <form onSubmit={updateSearch}>
-        <TextField
+        <OutlinedInput
           size="small"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton aria-label="toggle password visibility" onClick={updateSearch} edge="end">
                 <SearchIcon color="primary" />
-              </InputAdornment>
-            ),
-          }}
+              </IconButton>
+            </InputAdornment>
+          }
           color="primary"
           id="outlined-basic"
-          placeholder="..."
-          variant="outlined"
+          placeholder="Search..."
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit">Search</button>
       </form>
     </div>
   );
