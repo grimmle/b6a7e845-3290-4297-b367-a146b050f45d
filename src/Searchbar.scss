@@ -1,0 +1,19 @@
+.Searchbar {
+  button {
+    height: 100%;
+    font-size: 14px;
+    color: black;
+    border: none;
+    background-color: transparent;
+    padding: 10px 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+form {
+  display: flex;
+  align-items: center;
+}

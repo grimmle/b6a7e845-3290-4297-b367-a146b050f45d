@@ -1,0 +1,126 @@
+* {
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 380px;
+}
+
+main {
+  min-width: 380px;
+  flex: 1;
+  overflow-y: scroll;
+  #content {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  h2 {
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+  }  
+}
+
+body, #root, .app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  background-color: rgb(238, 238, 238);
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  padding: 10px 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  z-index: 1070; /* higher than z-index of @mui/FAB */
+  position: relative;
+}
+
+.cart {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  .indicator {
+    top: -12px;
+    left: 12px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    height: 20px;
+    width: 20px;
+    font-size: 14px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.selected-events {
+  width: 250px;
+  min-height: 100px;
+  padding: 5px 15px;
+  z-index: 1500;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: #4102f3;
+  font-size: 12px;
+  text-align: left;
+  list-style: none;
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+  h2 {
+    margin-bottom: 0;
+  }
+  li {
+    border-bottom: 1px solid lightgrey;
+    padding: 10px 0;
+    &:last-child {
+      border: none;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: auto;
+  justify-items: center;
+  margin: 0 20px;
+  padding: 20px 0;
+}
+@media only screen and (min-width: 660px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media only screen and (min-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1060; /* higher than z-index of @mui/FAB */
+}
