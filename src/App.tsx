@@ -53,7 +53,6 @@ function App() {
 
   useEffect(() => {
     if (!data) return;
-    console.log(selected);
     const result = Object.keys(data).reduce((events: SortedEvents, date: string) => {
       events[date] = events[date] ?? [];
       events[date].push(...data[date].filter((e) => !selected?.includes(e)));
