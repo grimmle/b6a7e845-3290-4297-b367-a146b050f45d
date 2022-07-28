@@ -87,22 +87,23 @@ function App() {
     }
   };
 
-  if (!filteredData) return <p>loading...</p>;
+  let searchResults: SortedEvents = {};
+  if (filteredData) {
+    searchResults = Object.assign({}, filteredData);
+    const options = {
+      threshold: 0.4,
+      keys: ["title", "venue.name", "artists.name"],
+    };
 
-  const options = {
-    threshold: 0.4,
-    keys: ["title", "venue.name", "artists.name"],
-  };
-  let searchResults: SortedEvents = Object.assign({}, filteredData);
-
-  if (search) {
-    Object.keys(filteredData).forEach((date) => {
-      const fuse = new Fuse(Object.values(filteredData[date]!), options);
-      const filteredEvents = fuse.search(search).map((result) => {
-        return result.item;
+    if (search) {
+      Object.keys(filteredData).forEach((date) => {
+        const fuse = new Fuse(Object.values(filteredData[date]!), options);
+        const filteredEvents = fuse.search(search).map((result) => {
+          return result.item;
+        });
+        searchResults[date] = filteredEvents;
       });
-      searchResults[date] = filteredEvents;
-    });
+    }
   }
 
   return (
@@ -144,27 +145,33 @@ function App() {
         <main onScroll={onScroll}>
           <div id="content">
             <h1>Public Events</h1>
-            {Object.keys(searchResults)
-              .sort((a, b) => {
-                return new Date(a).getTime() - new Date(b).getTime();
-              })
-              .filter((date) => searchResults[date].length > 0)
-              .map((date, i) => {
-                return (
-                  <div key={i} id={date}>
-                    <h2 className={stickyDate === date ? "sticky" : ""}>{date}</h2>
-                    <div className="grid" key={i}>
-                      {searchResults[date].map((event, i) => (
-                        <Event
-                          key={`${i}-${event._id}`}
-                          event={event}
-                          onSelect={memoizedCallback}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+            {Object.keys(searchResults).length > 0 ? (
+              <>
+                {Object.keys(searchResults)
+                  .sort((a, b) => {
+                    return new Date(a).getTime() - new Date(b).getTime();
+                  })
+                  .filter((date) => searchResults[date].length > 0)
+                  .map((date, i) => {
+                    return (
+                      <div key={i} id={date}>
+                        <h2 className={stickyDate === date ? "sticky" : ""}>{date}</h2>
+                        <div className="grid" key={i}>
+                          {searchResults[date].map((event, i) => (
+                            <Event
+                              key={`${i}-${event._id}`}
+                              event={event}
+                              onSelect={memoizedCallback}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </>
+            ) : (
+              <p>Loading Events...</p>
+            )}
           </div>
         </main>
       </div>
